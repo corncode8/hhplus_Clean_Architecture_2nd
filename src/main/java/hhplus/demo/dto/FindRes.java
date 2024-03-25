@@ -1,5 +1,6 @@
 package hhplus.demo.dto;
 
+import hhplus.demo.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
