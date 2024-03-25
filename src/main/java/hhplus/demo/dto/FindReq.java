@@ -1,6 +1,5 @@
 package hhplus.demo.dto;
 
-import hhplus.demo.domain.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

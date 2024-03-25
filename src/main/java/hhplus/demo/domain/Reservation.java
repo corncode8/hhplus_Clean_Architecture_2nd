@@ -1,6 +1,6 @@
 package hhplus.demo.domain;
 
-import hhplus.demo.dto.Status;
+import hhplus.demo.common.Status;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static hhplus.demo.dto.Status.*;
+import static hhplus.demo.common.Status.*;
 
 @Entity
 @Getter

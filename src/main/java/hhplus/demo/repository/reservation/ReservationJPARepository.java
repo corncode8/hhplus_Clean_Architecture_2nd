@@ -10,8 +10,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationJPARepository extends JpaRepository<Reservation, Long> {
-
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Reservation> findById(Long id);
-    List<Reservation> findAllById(Long id);
 }

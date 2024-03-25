@@ -42,9 +42,8 @@ public class ReservationWriter implements ReservationRepository {
     }
 
     private Lecture getLecture(Long lectureId) {
-        return lectureJPARepository.findById(lectureId)
+        return lectureJPARepository.findLectureByIdWithLock(lectureId)
                 .orElseThrow(() -> new BaseException(NOT_FIND_LECTURE));
     }
-
 
 }

@@ -1,7 +1,8 @@
 package hhplus.demo.domain;
 
-import hhplus.demo.dto.Status;
+import hhplus.demo.common.Status;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hhplus.demo.dto.Status.*;
+import static hhplus.demo.common.Status.*;
 
 @Entity
 @Getter
@@ -23,12 +24,18 @@ public class Student {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private hhplus.demo.dto.Status Status = FAIL;
+    private Status status = FAIL;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     private List<Reservation> reservations = new ArrayList<>();
 
     public void setSuccess() {
-        this.Status = SUCCESS;
+        this.status = SUCCESS;
+    }
+
+    @Builder
+    public Student(Long id, Status status) {
+        this.id = id;
+        this.status = status;
     }
 }

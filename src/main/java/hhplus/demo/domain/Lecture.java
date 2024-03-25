@@ -1,6 +1,7 @@
 package hhplus.demo.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,12 +22,16 @@ public class Lecture {
     @Column(name = "name", nullable = false)
     private String name;
 
-    private Boolean registLimit;
-
     @Column(name = "lectureAt", nullable = false)
     private LocalDateTime lectureAt;
 
     @OneToMany(mappedBy = "lecture")
     private List<Reservation> reservations = new ArrayList<>();
 
+
+    @Builder
+    public Lecture(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

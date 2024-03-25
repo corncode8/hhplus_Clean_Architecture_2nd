@@ -5,7 +5,7 @@ import hhplus.demo.domain.Reservation;
 import hhplus.demo.domain.Student;
 import hhplus.demo.dto.ReservationReq;
 import hhplus.demo.dto.ReservationRes;
-import hhplus.demo.dto.Status;
+import hhplus.demo.common.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,21 +17,22 @@ import static hhplus.demo.common.response.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReservationService {
 
     private final ReservationManager reservationManager;
 
-    @Transactional
+
     public ReservationRes regist(ReservationReq reservationReq) {
-        Boolean validation = validation(reservationReq.lectureId);
+        Boolean validation = validation(reservationReq.lectureId, reservationReq.studentId);
 
         try {
             ReservationRes reservationRes;
             if (validation) {
                 Reservation regist = reservationManager.regist(reservationReq);
-                Student student = reservationManager.getStudent(reservationReq.studentId);
 
-                regist.setSuccess(); student.setSuccess();
+
+                regist.setSuccess();
 
                 return new ReservationRes(regist.getStatus());
 
@@ -51,7 +52,7 @@ public class ReservationService {
     * 이미 신청자가 30명이 초과되면 이후 신청자는 요청을 실패합니다.
     */
 
-    private Boolean validation(Long lectureId) {
+    private Boolean validation(Long lectureId, Long studentId) {
 
         // 4월 20일 1시 이후
         if (LocalDateTime.now().isBefore(LocalDateTime.of(2024,4,20,13,00))) {
@@ -61,6 +62,16 @@ public class ReservationService {
         // 30명이 초과되었는지 여부를 확인
         long reservationCount = reservationManager.reservationCnt(lectureId);
         if (reservationCount >= 30) {
+            return false;
+        }
+
+
+        Student student = reservationManager.getStudent(studentId);
+
+        // 신청한 유저인지 확인
+        if (!student.getStatus().equals("SUCCESS")) {
+            student.setSuccess();
+        } else {
             return false;
         }
 
