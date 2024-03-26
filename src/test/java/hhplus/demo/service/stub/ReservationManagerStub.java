@@ -50,9 +50,6 @@ public class ReservationManagerStub extends ReservationManager {
         lecture.addReservation(reservation);
     }
 
-    public void add30Reservations(Lecture lecture) {
-
-    }
     public void addStudent(Student student) {
         students.put(student.getId(), student);
     }

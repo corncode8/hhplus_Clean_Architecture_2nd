@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 import static hhplus.demo.common.response.BaseResponseStatus.*;
@@ -24,8 +25,6 @@ import static hhplus.demo.common.response.BaseResponseStatus.*;
 public class ReservationService {
 
     private final ReservationManager reservationManager;
-
-
 
     public ReservationRes regist(ReservationReq reservationReq) {
         Boolean validation = validation(reservationReq.lectureId, reservationReq.studentId);
@@ -65,10 +64,9 @@ public class ReservationService {
     private Boolean validation(Long lectureId, Long studentId) {
 
         // 4월 20일 1시 이후
-        if (LocalDateTime.now().isBefore(LocalDateTime.of(2024,4,20,13,00))) {
-            log.info("1번 if");
-            return false;
-        }
+//        if (LocalDateTime.now().isBefore(LocalDateTime.of(2024,4,20,13,00))) {
+//            return false;
+//        }
 
         // 30명이 초과되었는지 여부를 확인
         long reservationCount = reservationManager.reservationCnt(lectureId);

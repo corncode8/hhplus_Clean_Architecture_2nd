@@ -20,7 +20,6 @@ public class ReservationWriter implements ReservationCoreRepository {
 
     private final StudentRepository studentRepository;
     private final ReservationRepository repository;
-    private final LectureRepository lectureRepository;
     private final LectureReader lectureReader;
 
     @Override
