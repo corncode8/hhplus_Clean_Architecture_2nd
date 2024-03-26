@@ -34,4 +34,12 @@ public class Lecture {
         this.id = id;
         this.name = name;
     }
+
+    public void addReservation(Reservation reservation) {
+        reservations.add(reservation);
+    }
+
+    public int getReservationCnt() {
+        return reservations.size();
+    }
 }

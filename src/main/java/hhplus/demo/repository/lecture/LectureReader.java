@@ -1,28 +1,32 @@
 package hhplus.demo.repository.lecture;
 
 import hhplus.demo.common.exceptions.BaseException;
-import hhplus.demo.common.response.BaseResponseStatus;
 import hhplus.demo.domain.Lecture;
-import hhplus.demo.domain.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Optional;
 
 import static hhplus.demo.common.response.BaseResponseStatus.*;
 
 @Component
 @RequiredArgsConstructor
-public class LectureReader implements LectureRepository{
+public class LectureReader implements LectureCoreRepository {
 
-    private final LectureJPARepository lectureJPARepository;
+    private final LectureRepository lectureRepository;
 
     @Override
     public int reservationCnt(Long lectureId) {
-        Lecture lecture = lectureJPARepository.findById(lectureId)
+        Lecture lecture = lectureRepository.findById(lectureId)
                 .orElseThrow(() -> new BaseException(NOT_FIND_LECTURE));
 
         return lecture.getReservations().size();
     }
+
+    @Override
+    public Optional<Lecture> findLectureById(Long id) {
+        return lectureRepository.findLectureByIdWithLock(id);
+    }
+
 
 }

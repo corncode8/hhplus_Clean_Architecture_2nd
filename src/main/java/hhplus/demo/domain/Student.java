@@ -26,7 +26,7 @@ public class Student {
     @Column(nullable = false)
     private Status status = FAIL;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "student")
     private List<Reservation> reservations = new ArrayList<>();
 
     public void setSuccess() {

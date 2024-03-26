@@ -1,8 +1,10 @@
 package hhplus.demo.repository.student;
 
 import hhplus.demo.domain.Student;
-import hhplus.demo.dto.FindReq;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StudentRepository {
-    Student find(FindReq findReq);
+import java.util.Optional;
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+    Optional<Student> findById(Long id);
 }

@@ -3,10 +3,12 @@ package hhplus.demo.service;
 import hhplus.demo.common.exceptions.BaseException;
 import hhplus.demo.domain.Reservation;
 import hhplus.demo.domain.Student;
+import hhplus.demo.dto.FindRes;
 import hhplus.demo.dto.ReservationReq;
 import hhplus.demo.dto.ReservationRes;
 import hhplus.demo.common.Status;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 
 import static hhplus.demo.common.response.BaseResponseStatus.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -23,26 +26,33 @@ public class ReservationService {
     private final ReservationManager reservationManager;
 
 
+
     public ReservationRes regist(ReservationReq reservationReq) {
         Boolean validation = validation(reservationReq.lectureId, reservationReq.studentId);
 
         try {
-            ReservationRes reservationRes;
             if (validation) {
                 Reservation regist = reservationManager.regist(reservationReq);
 
-
                 regist.setSuccess();
+                regist.getStudent().setSuccess();
 
                 return new ReservationRes(regist.getStatus());
-
             } else {
-                return reservationRes = new ReservationRes(Status.FAIL);
+                return new ReservationRes(Status.FAIL);
             }
 
         } catch (BaseException e) {
             throw new BaseException(FAIL_RESERVATION);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public FindRes find(Long userId) {
+
+        Student student = reservationManager.find(userId);
+
+        return new FindRes(student.getId(), student.getStatus());
     }
 
     /*
@@ -56,25 +66,25 @@ public class ReservationService {
 
         // 4월 20일 1시 이후
         if (LocalDateTime.now().isBefore(LocalDateTime.of(2024,4,20,13,00))) {
+            log.info("1번 if");
             return false;
         }
 
         // 30명이 초과되었는지 여부를 확인
         long reservationCount = reservationManager.reservationCnt(lectureId);
+
         if (reservationCount >= 30) {
             return false;
         }
 
-
-        Student student = reservationManager.getStudent(studentId);
+        Student student = reservationManager.find(studentId);
 
         // 신청한 유저인지 확인
-        if (!student.getStatus().equals("SUCCESS")) {
-            student.setSuccess();
-        } else {
+        if (student.getStatus().equals("SUCCESS")) {
             return false;
         }
 
         return true;
     }
+
 }

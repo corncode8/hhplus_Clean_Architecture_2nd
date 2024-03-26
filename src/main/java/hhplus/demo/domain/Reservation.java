@@ -53,7 +53,4 @@ public class Reservation {
         this.Status = CANCLE;
     }
 
-
-
-
 }
