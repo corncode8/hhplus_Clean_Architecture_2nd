@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ public class Reservation {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private Status Status;
+    private Status Status = FAIL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId")
@@ -32,6 +33,7 @@ public class Reservation {
     @JoinColumn(name = "lectureId")
     private Lecture lecture;
 
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

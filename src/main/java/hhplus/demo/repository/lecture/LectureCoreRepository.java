@@ -8,4 +8,6 @@ public interface LectureCoreRepository {
 
     int reservationCnt(Long lectureId);
     Optional<Lecture> findLectureById(Long id);
+
+    Optional<Lecture> findLecture(Long id);
 }

@@ -1,12 +1,12 @@
-package hhplus.demo.repository.reservation;
+package hhplus.demo.service.component;
 
 import hhplus.demo.common.exceptions.BaseException;
 import hhplus.demo.domain.Lecture;
 import hhplus.demo.domain.Reservation;
 import hhplus.demo.domain.Student;
 import hhplus.demo.dto.ReservationReq;
-import hhplus.demo.repository.lecture.LectureReader;
-import hhplus.demo.repository.lecture.LectureRepository;
+import hhplus.demo.repository.reservation.ReservationCoreRepository;
+import hhplus.demo.repository.reservation.ReservationRepository;
 import hhplus.demo.repository.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -34,6 +34,7 @@ public class ReservationWriter implements ReservationCoreRepository {
                 .lecture(lecture)
                 .build();
         lecture.addReservation(reservation);
+        lecture.reduceQuantity();
 
         return repository.save(reservation);
     }

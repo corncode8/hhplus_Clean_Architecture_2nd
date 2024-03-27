@@ -1,16 +1,16 @@
 package hhplus.demo.controller;
 
 import hhplus.demo.common.response.BaseResponse;
+import hhplus.demo.controller.response.ResponseMapper;
+import hhplus.demo.domain.Reservation;
+import hhplus.demo.domain.Student;
 import hhplus.demo.dto.FindRes;
 import hhplus.demo.dto.ReservationReq;
 import hhplus.demo.dto.ReservationRes;
 import hhplus.demo.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -18,20 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final ResponseMapper responseMapper;
 
     @PostMapping("/regist")
-    public BaseResponse<ReservationRes> Reservation(ReservationReq reservationReq) {
+    public BaseResponse<ReservationRes> Reservation(@RequestBody ReservationReq reservationReq) {
 
-        ReservationRes regist = reservationService.regist(reservationReq);
+        Reservation regist = reservationService.regist(reservationReq);
 
-        return new BaseResponse<>(regist);
+        return new BaseResponse<>(responseMapper.toReservationRes(regist));
 
     }
 
     @GetMapping("/check/{id}")
     public BaseResponse<FindRes> getReservation(@PathVariable("userId")Long userId) {
-        FindRes findRes = reservationService.find(userId);
+        Student student = reservationService.find(userId);
 
-        return new BaseResponse<>(findRes);
+        return new BaseResponse<>(responseMapper.toFindUserRes(student));
     }
 }

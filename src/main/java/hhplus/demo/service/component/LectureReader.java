@@ -1,7 +1,9 @@
-package hhplus.demo.repository.lecture;
+package hhplus.demo.service.component;
 
 import hhplus.demo.common.exceptions.BaseException;
 import hhplus.demo.domain.Lecture;
+import hhplus.demo.repository.lecture.LectureCoreRepository;
+import hhplus.demo.repository.lecture.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,11 @@ public class LectureReader implements LectureCoreRepository {
     @Override
     public Optional<Lecture> findLectureById(Long id) {
         return lectureRepository.findLectureByIdWithLock(id);
+    }
+
+    @Override
+    public Optional<Lecture> findLecture(Long id) {
+        return lectureRepository.findById(id);
     }
 
 
