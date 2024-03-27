@@ -1,14 +1,15 @@
-package hhplus.demo.reservation.stub;
+package hhplus.demo.reservation.fake;
 
 import hhplus.demo.domain.Lecture;
 import hhplus.demo.domain.Reservation;
 import hhplus.demo.repository.lecture.LectureCoreRepository;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class LectureCoreRepositoryStub implements LectureCoreRepository {
+public class FakeLectureCoreRepository implements LectureCoreRepository {
 
     private final Map<Long, Lecture> lectures = new HashMap<>();
 
@@ -29,7 +30,12 @@ public class LectureCoreRepositoryStub implements LectureCoreRepository {
 
     @Override
     public Optional<Lecture> findLectureById(Long id) {
-        return Optional.ofNullable(lectures.getOrDefault(id, new Lecture(id, "항해 플러스")));
+        return Optional.ofNullable(lectures.getOrDefault(id, new Lecture(id, "항해 플러스", LocalDateTime.now())));
+    }
+
+    @Override
+    public Optional<Lecture> findLecture(Long id) {
+        return Optional.ofNullable(lectures.get(id));
     }
 
 }

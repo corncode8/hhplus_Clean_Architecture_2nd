@@ -5,29 +5,31 @@ import hhplus.demo.domain.Lecture;
 import hhplus.demo.domain.Reservation;
 import hhplus.demo.domain.Student;
 import hhplus.demo.dto.ReservationReq;
-import hhplus.demo.reservation.stub.LectureCoreRepositoryStub;
-import hhplus.demo.reservation.stub.ReservationCoreRepositoryStub;
-import hhplus.demo.reservation.stub.StudentCoreRepositoryStub;
+import hhplus.demo.reservation.fake.FakeLectureCoreRepository;
+import hhplus.demo.reservation.fake.FakeReservationCoreRepository;
+import hhplus.demo.reservation.fake.FakeStudentCoreRepository;
 import hhplus.demo.service.ReservationManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ReservationManagerTest {
 
-    private StudentCoreRepositoryStub studentStub;
-    private LectureCoreRepositoryStub lectureStub;
-    private ReservationCoreRepositoryStub reservationStub;
+    private FakeStudentCoreRepository studentStub;
+    private FakeLectureCoreRepository lectureStub;
+    private FakeReservationCoreRepository reservationStub;
     private ReservationManager reservationManager;
 
     @BeforeEach
     void setUp() {
-        studentStub = new StudentCoreRepositoryStub();
-        lectureStub = new LectureCoreRepositoryStub();
-        reservationStub = new ReservationCoreRepositoryStub();
+        studentStub = new FakeStudentCoreRepository();
+        lectureStub = new FakeLectureCoreRepository();
+        reservationStub = new FakeReservationCoreRepository();
         reservationManager = new ReservationManager(reservationStub, studentStub, lectureStub);
     }
 
@@ -39,7 +41,7 @@ public class ReservationManagerTest {
         Long studentId = 1L;
         Long lectureId = 1L;
         Student student = new Student(studentId, Status.FAIL);
-        Lecture lecture = new Lecture(lectureId, "항해 플러스");
+        Lecture lecture = new Lecture(lectureId, "항해 플러스", LocalDateTime.now());
 
         studentStub.addStudent(student);
         lectureStub.addLecture(lecture);
@@ -66,7 +68,7 @@ public class ReservationManagerTest {
         studentStub.addStudent(student);
 
         //when
-        Student result = reservationManager.find(studentId);
+        Student result = reservationManager.findStudent(studentId);
 
         //then
         assertNotNull(result);
@@ -81,7 +83,7 @@ public class ReservationManagerTest {
         Long studerntId = 1L;
 
         Student student = new Student(studerntId, Status.FAIL);
-        Lecture lecture = new Lecture(lectureId, "항해 플러스");
+        Lecture lecture = new Lecture(lectureId, "항해 플러스", LocalDateTime.now());
 
         Reservation reservation = Reservation.builder()
                 .student(student)

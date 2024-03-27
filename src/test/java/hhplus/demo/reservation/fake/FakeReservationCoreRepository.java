@@ -1,4 +1,4 @@
-package hhplus.demo.reservation.stub;
+package hhplus.demo.reservation.fake;
 
 import hhplus.demo.common.Status;
 import hhplus.demo.domain.Lecture;
@@ -8,11 +8,12 @@ import hhplus.demo.dto.ReservationReq;
 import hhplus.demo.repository.reservation.ReservationCoreRepository;
 
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ReservationCoreRepositoryStub implements ReservationCoreRepository {
+public class FakeReservationCoreRepository implements ReservationCoreRepository {
 
     private final Map<Long, Reservation> reservations = new HashMap<>();
     private final AtomicLong Generator = new AtomicLong();
@@ -24,7 +25,7 @@ public class ReservationCoreRepositoryStub implements ReservationCoreRepository 
         Long reservationId = Generator.incrementAndGet();
         Reservation reservation = Reservation.builder()
                 .student(new Student(reservationReq.studentId, Status.FAIL))
-                .lecture(new Lecture(reservationReq.lectureId, "항해 플러스"))
+                .lecture(new Lecture(reservationReq.lectureId, "항해 플러스", LocalDateTime.now()))
                 .build();
 
         // 메모리에 예약 객체 save
