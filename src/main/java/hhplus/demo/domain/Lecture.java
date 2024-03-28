@@ -59,12 +59,8 @@ public class Lecture {
         reservations.add(reservation);
     }
 
-    public int getReservationCnt() {
-        return reservations.size();
-    }
-
     public void reduceQuantity() {
-        if (quantity -1 < 0) {
+        if (quantity - 1 < 0) {
             throw new BaseException(EMPTY_QUANTITY_LECTURE);
         }
         quantity -= 1;

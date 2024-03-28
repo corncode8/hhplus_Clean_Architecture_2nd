@@ -7,9 +7,8 @@ import hhplus.demo.repository.lecture.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 
-import static hhplus.demo.common.response.BaseResponseStatus.*;
+import static hhplus.demo.common.response.BaseResponseStatus.NOT_FIND_LECTURE;
 
 @Component
 @RequiredArgsConstructor
@@ -18,21 +17,9 @@ public class LectureReader implements LectureCoreRepository {
     private final LectureRepository lectureRepository;
 
     @Override
-    public int reservationCnt(Long lectureId) {
-        Lecture lecture = lectureRepository.findById(lectureId)
+    public Lecture findLecture(Long id) {
+        return lectureRepository.findById(id)
                 .orElseThrow(() -> new BaseException(NOT_FIND_LECTURE));
-
-        return lecture.getReservations().size();
-    }
-
-    @Override
-    public Optional<Lecture> findLectureById(Long id) {
-        return lectureRepository.findLectureByIdWithLock(id);
-    }
-
-    @Override
-    public Optional<Lecture> findLecture(Long id) {
-        return lectureRepository.findById(id);
     }
 
 

@@ -7,8 +7,6 @@ import hhplus.demo.repository.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 import static hhplus.demo.common.response.BaseResponseStatus.NOT_FIND_USER;
 
 

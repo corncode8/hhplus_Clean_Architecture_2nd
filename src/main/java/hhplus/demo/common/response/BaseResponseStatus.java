@@ -10,9 +10,10 @@ public enum BaseResponseStatus {
 
     NOT_FIND_USER(false, HttpStatus.NOT_FOUND.value(),"일치하는 유저가 없습니다."),
     ALREADY_REGIST_USER(false, HttpStatus.NOT_FOUND.value(),"이미 신청한 유저입니다."),
+
     NOT_FIND_LECTURE(false, HttpStatus.NOT_FOUND.value(),"일치하는 강의가 없습니다."),
     EMPTY_QUANTITY_LECTURE(false, HttpStatus.NOT_FOUND.value(),"강의가 품절입니다."),
-
+    BEFORE_RESERVATION_TIME(false, HttpStatus.NOT_FOUND.value(),"신청 가능 시간이 아닙니다."),
     FAIL_RESERVATION(false, HttpStatus.NOT_FOUND.value(),"강의 신청에 실패하였습니다.");
 
     private final boolean isSuccess;

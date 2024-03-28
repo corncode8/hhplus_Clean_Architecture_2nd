@@ -51,8 +51,4 @@ public class Reservation {
         this.Status = FAIL;
     }
 
-    public void setCancle() {
-        this.Status = CANCLE;
-    }
-
 }

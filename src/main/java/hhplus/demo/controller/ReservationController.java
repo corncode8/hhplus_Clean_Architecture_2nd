@@ -31,7 +31,7 @@ public class ReservationController {
 
     @GetMapping("/check/{id}")
     public BaseResponse<FindRes> getReservation(@PathVariable("userId")Long userId) {
-        Student student = reservationService.find(userId);
+        Student student = reservationService.findStudent(userId);
 
         return new BaseResponse<>(responseMapper.toFindUserRes(student));
     }
