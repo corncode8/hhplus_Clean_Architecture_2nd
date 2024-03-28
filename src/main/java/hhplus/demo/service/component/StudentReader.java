@@ -7,7 +7,10 @@ import hhplus.demo.repository.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static hhplus.demo.common.response.BaseResponseStatus.*;
+import java.util.Optional;
+
+import static hhplus.demo.common.response.BaseResponseStatus.NOT_FIND_USER;
+
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +19,7 @@ public class StudentReader implements StudentCoreRepository {
     private final StudentRepository studentRepository;
 
     @Override
-    public Student find(Long id) {
+    public Student findStudent(Long id) {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new BaseException(NOT_FIND_USER));
     }
