@@ -1,7 +1,6 @@
 package hhplus.demo.service.component;
 
 import hhplus.demo.common.Status;
-import hhplus.demo.common.exceptions.BaseException;
 import hhplus.demo.domain.Lecture;
 import hhplus.demo.domain.Reservation;
 import hhplus.demo.domain.Student;
@@ -9,13 +8,11 @@ import hhplus.demo.dto.ReservationReq;
 import hhplus.demo.repository.lecture.LectureRepository;
 import hhplus.demo.repository.reservation.ReservationRepository;
 import hhplus.demo.repository.student.StudentRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Clock;
@@ -23,7 +20,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
-import static hhplus.demo.common.response.BaseResponseStatus.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;

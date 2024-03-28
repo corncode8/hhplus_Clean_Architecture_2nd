@@ -33,7 +33,6 @@ public class ReservationWriter implements ReservationCoreRepository {
     public Reservation regist(ReservationReq reservationReq) {
         Student student = getStudent(reservationReq.studentId);
 
-
         Lecture lecture = getLecture(reservationReq.lectureId);
 
         Reservation reservation = Reservation.builder()

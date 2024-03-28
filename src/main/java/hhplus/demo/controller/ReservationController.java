@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import static hhplus.demo.common.response.BaseResponseStatus.*;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -20,8 +22,15 @@ public class ReservationController {
     private final ReservationService reservationService;
     private final ResponseMapper responseMapper;
 
-    @PostMapping("/regist")
+    @PostMapping("/reservation")
     public BaseResponse<ReservationRes> Reservation(@RequestBody ReservationReq reservationReq) {
+
+        if (reservationReq.studentId == null) {
+            return new BaseResponse<>(NOT_FIND_USER);
+        }
+        if (reservationReq.lectureId == null) {
+            return new BaseResponse<>(NOT_FIND_LECTURE);
+        }
 
         Reservation regist = reservationService.regist(reservationReq);
 
